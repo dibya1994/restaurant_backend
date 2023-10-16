@@ -1,6 +1,6 @@
 const express = require('express');
 require('dotenv').config()
-const brandRoutes = require('./routes/brand-routes'); 
+const authRoutes = require('./routes/auth-routes'); 
 const cookieParser = require("cookie-parser");
 const path = require('path');
 var flash = require('connect-flash');
@@ -9,9 +9,15 @@ const cors = require('cors');
 
 
 
-
-
 const app = express();
+
+app.use(express.json());
+app.use((req,res,next)=>{
+  // console.log("HTTP method - "+ req.method + " , URL -"+ req.url);
+  next();
+});
+
+
 const port = process.env.PORT
 const oneDay = 1000 * 60 * 60 * 24;
 app.use(cookieParser());
@@ -35,7 +41,8 @@ app.use(express.json());
 
 
 // use routes here----------------
-app.use(brandRoutes.routes);
+
+app.use(authRoutes.routes);
 
 
 
